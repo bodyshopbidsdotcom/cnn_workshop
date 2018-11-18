@@ -7,6 +7,9 @@ name = "pypi"
 
 [packages]
 tensorflow = "*"
+keras = "*"
+numpy = "*"
+opencv-python = "*"
 
 [requires]
 python_version = "3.6.4"
