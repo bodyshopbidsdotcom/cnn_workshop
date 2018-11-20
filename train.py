@@ -74,7 +74,4 @@ def train():
         validation_steps=np.ceil(float(len(valid_files)) / float(BATCH_SIZE)))
 
 
-
-
-
 train()
