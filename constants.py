@@ -1,3 +1,4 @@
+IMAGE_FILE_SUFFIXES = ['jpg', 'jpeg', 'png']
 DATA = 'data'
 EPOCHS = 64
 MODELS_FOLDER = 'models'

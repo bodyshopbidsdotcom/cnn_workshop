@@ -80,6 +80,8 @@ def _random_horizonal_flip(image, u=0.5):
 
 
 def perturb(img):
+    if img is None:
+        raise ArgumentException('Image is None')
     img = _random_hue_saturation_value(img,
                                        hue_shift_limit=(-50, 50),
                                        sat_shift_limit=(-5, 5),

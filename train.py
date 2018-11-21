@@ -3,12 +3,13 @@ import sklearn.model_selection as sk_model_selection
 from os import listdir
 from os.path import join
 import numpy as np
+from random import shuffle
 import pdb
 import cv2
 
 from model import model_1
 from perturbations import perturb
-from constants import DATA, BATCH_SIZE, TEST_SIZE, RANDOM_SEED, MODELS_FOLDER, EPOCHS
+from constants import DATA, BATCH_SIZE, TEST_SIZE, RANDOM_SEED, MODELS_FOLDER, EPOCHS, IMAGE_FILE_SUFFIXES
 
 
 def classification_vector(filename):
@@ -45,6 +46,8 @@ def generator(files, image_directory, perturb_function=None):
 def train():
 
     files = listdir(DATA)
+    files = [file for file in files if file.lower().endswith(tuple(IMAGE_FILE_SUFFIXES))]
+    shuffle(files)
     train_files, valid_files = sk_model_selection.train_test_split(files, test_size=TEST_SIZE, random_state=RANDOM_SEED)
 
     basic_model = model_1()
