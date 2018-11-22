@@ -14,7 +14,7 @@ def model_1(input_shape=(128, 128, 3), num_classes=2, kernel_size=3, number_of_b
     for i in range(number_of_blocks):
         conv = Conv2D(filters, (kernel_size, kernel_size), padding='same')(prev_layer)
         acti = Activation('relu')(conv)
-        maxp = MaxPooling2D((2, 2), strides=(2, 2))(acti)
+        maxp = MaxPooling2D((2, 2), strides=(4, 4))(acti)
 
         prev_layer = maxp
         filters *= 2
@@ -25,5 +25,4 @@ def model_1(input_shape=(128, 128, 3), num_classes=2, kernel_size=3, number_of_b
     model.compile(optimizer=RMSprop(lr=0.0001), loss=mean_squared_error, metrics=[binary_accuracy])
 
     return model
-
 

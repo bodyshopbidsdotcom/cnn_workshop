@@ -63,9 +63,9 @@ def train():
                                                    epsilon=1e-4),
                  keras_callbacks.ModelCheckpoint(monitor='val_loss',
                                                  filepath=join(MODELS_FOLDER,
-                                                               'weights-{epoch:04d}-{val_dice_coeff:.2f}.hdf5'),
+                                                               'weights-{epoch:04d}-{val_binary_accuracy:.2f}.hdf5'),
                                                  save_best_only=True,
-                                                 save_weights_only=True)]
+                                                 save_weights_only=False)]
 
     basic_model.fit_generator(
         generator(train_files, DATA, perturb),
