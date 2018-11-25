@@ -1,0 +1,9 @@
+IMAGE_FILE_SUFFIXES = ['jpg', 'jpeg', 'png']
+DATA = 'data'
+EPOCHS = 64
+MODELS_FOLDER = 'models'
+BATCH_SIZE = 32
+RANDOM_SEED = 1
+TEST_SIZE = 0.2
+SHAPE = (128, 128)
+STRIDE = (4, 4)
