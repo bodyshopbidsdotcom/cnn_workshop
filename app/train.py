@@ -8,7 +8,7 @@ import pdb
 import cv2
 from uuid import uuid4
 
-from model import model_1, model_2
+from model import model_1, model_2, model_alexnet
 from perturbations import perturb
 from constants import DATA, BATCH_SIZE, TEST_SIZE, RANDOM_SEED, MODELS_FOLDER, EPOCHS, IMAGE_FILE_SUFFIXES
 
@@ -83,6 +83,11 @@ def train(model, model_name):
         validation_data=generator(valid_files, DATA),
         validation_steps=np.ceil(float(len(valid_files)) / float(BATCH_SIZE)))
 
+
+model, name = model_alexnet(input_shape=(128, 128, 3))
+train(model, name)
+
+'''
 model, name = model_1()
 train(model, name)
 model, name = model_1(number_of_blocks=6)
@@ -91,3 +96,4 @@ model, name = model_1(number_of_blocks=9)
 train(model, name)
 model, name = model_2()
 train(model, name)
+'''
