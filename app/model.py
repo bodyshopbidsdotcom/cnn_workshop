@@ -29,7 +29,7 @@ def model_1(input_shape=(128, 128, 3), num_classes=2, kernel_size=3, number_of_b
     model = Model(inputs=inputs, outputs=act)
     model.compile(optimizer=RMSprop(lr=0.0001), loss=mean_squared_error, metrics=[binary_accuracy])
 
-    return model, 'model_1'
+    return model, 'model_1_{}_{}'.format(num_classes, number_of_blocks)
 
 
 def model_2(input_shape=(128, 128, 3), num_classes=2, kernel_size=3, number_of_blocks=3):
@@ -57,7 +57,7 @@ def model_2(input_shape=(128, 128, 3), num_classes=2, kernel_size=3, number_of_b
     model = Model(inputs=inputs, outputs=act)
     model.compile(optimizer=RMSprop(lr=0.0001), loss=mean_squared_error, metrics=[binary_accuracy])
 
-    return model, 'model_2'
+    return model, 'model_1_{}_{}'.format(num_classes, number_of_blocks)
 
 
 def model_alexnet(input_shape=(256, 256, 3), num_classes=2):
