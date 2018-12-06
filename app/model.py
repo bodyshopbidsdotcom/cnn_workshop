@@ -25,7 +25,7 @@ def model_1(input_shape=(128, 128, 3), num_classes=2, kernel_size=3, number_of_b
     flatten = Flatten()(prev_layer)
     dense = Dense(num_classes, activation='sigmoid')(flatten)
     bn = BatchNormalization()(dense)
-    act = Activation()(bn)
+    act = Activation('relu')(bn)
     model = Model(inputs=inputs, outputs=act)
     model.compile(optimizer=RMSprop(lr=0.0001), loss=mean_squared_error, metrics=[binary_accuracy])
 
@@ -53,7 +53,7 @@ def model_2(input_shape=(128, 128, 3), num_classes=2, kernel_size=3, number_of_b
     flatten = Flatten()(prev_layer)
     dense = Dense(num_classes, activation='sigmoid')(flatten)
     bn = BatchNormalization()(dense)
-    act = Activation()(bn)
+    act = Activation('relu')(bn)
     model = Model(inputs=inputs, outputs=act)
     model.compile(optimizer=RMSprop(lr=0.0001), loss=mean_squared_error, metrics=[binary_accuracy])
 
