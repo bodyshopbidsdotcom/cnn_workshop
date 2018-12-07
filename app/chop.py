@@ -7,7 +7,9 @@ from imutils import build_montages
 
 from model import model_1, model_2, model_alexnet
 
-IMAGE = 'cat.0.jpg'
+#IMAGE = 'cat.93.jpg'
+#IMAGE = 'slovenia.png'
+IMAGE = 'michael.png'
 
 
 def build_bottleneck_model(model, layer_name):
@@ -27,6 +29,7 @@ alex, name = model_alexnet(input_shape=(128, 128, 3))
 alex.summary()
 alex.load_weights('weights-0032-0.92.hdf5')
 target_layer = 'conv2d_1'
+#target_layer = 'max_pooling2d_1'
 
 model = build_bottleneck_model(alex, target_layer)
 
@@ -47,8 +50,12 @@ predictions = predictions.astype('uint8')
 predictions = np.dsplit(predictions[0], num_predictions)  # Shape is (1, <width>, <height>, <depth>). Need to remove the leading 1.
 zero_stack = np.zeros(target_shape)
 predictions = [np.dstack((np.squeeze(prediction), zero_stack, zero_stack)) for prediction in predictions]
-montages = build_montages(predictions, target_shape, (7, 7))
+
+montage_shape = (128, 128)
+montages = build_montages(predictions, montage_shape, (7, 7))
 
 for montage in montages:
-    cv2.imshow('Filters', montage)
-    cv2.waitKey()
+    cv2.imshow(IMAGE, montage)
+    if cv2.waitKey() == 113:
+        break
+
