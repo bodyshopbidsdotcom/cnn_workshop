@@ -113,7 +113,7 @@ def model_alexnet(input_shape=(256, 256, 3), num_classes=2):
     bn = BatchNormalization()(dense)
     act = Activation('softmax')(bn)
 
-    model = Model(inputs=inputs, outputs=act)
+    model = Model(inputs=inputs, outputs=act)  # output should be act
     model.compile(optimizer=RMSprop(lr=0.0001), loss=mean_squared_error, metrics=[binary_accuracy])
 
     return model, 'model_alexnet'

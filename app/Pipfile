@@ -11,6 +11,7 @@ keras = "*"
 numpy = "*"
 opencv-python = "*"
 sklearn = "*"
+imutils = "*"
 
 [requires]
 python_version = "3.6.4"

@@ -84,8 +84,8 @@ def train(model, model_name):
         validation_steps=np.ceil(float(len(valid_files)) / float(BATCH_SIZE)))
 
 
-model, name = model_alexnet(input_shape=(128, 128, 3))
-train(model, name)
+
+
 
 '''
 model, name = model_1()
