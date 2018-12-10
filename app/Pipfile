@@ -12,6 +12,7 @@ numpy = "*"
 opencv-python = "*"
 sklearn = "*"
 imutils = "*"
+scikit-learn = "*"
 
 [requires]
 python_version = "3.6.4"
