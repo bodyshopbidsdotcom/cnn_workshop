@@ -7,13 +7,17 @@ import pdb
 from imutils import build_montages
 from sklearn.cluster import KMeans
 
-from model import model_1, model_2, model_alexnet
+from model import model_1, model_2, model_alexnet, model_unet_1024
 
 #IMAGE = 'cat.93.jpg'
 #IMAGE = 'slovenia.png'
-#IMAGE = 'michael.png'
-INPUT_SHAPE = (128, 128)
-PREDICTED_SHAPE = (8, 8)
+IMAGE = '6721757.png'
+INPUT_SHAPE = (1024, 1024)
+#PREDICTED_SHAPE = (128, 128)
+#PREDICTED_SHAPE = (256, 256)
+#PREDICTED_SHAPE = (512, 512)
+PREDICTED_SHAPE = (1024, 1024)
+TARGET_LAYER = 'activation_2'
 
 
 def build_bottleneck_model(model, layer_name):
@@ -54,32 +58,28 @@ def generate_prediction(image_path, model):
     return predictions
 
 
-alex, name = model_alexnet(input_shape=(128, 128, 3))
-alex.summary()
-alex.load_weights('weights-0032-0.92.hdf5')
-target_layer = 'max_pooling2d_4'
+unet, name = model_unet_1024()
+unet.summary()
+unet.load_weights('models/114-model-weights.h5')
 
-model = build_bottleneck_model(alex, target_layer)
+model = build_bottleneck_model(unet, TARGET_LAYER)
 
-features = []
-count = 0
+
 images = listdir('data')
-for image_filename in images:
-    image_path = join('data', image_filename)
-
+for image in images:
+    image_path = join('data', image)
     predictions = generate_prediction(image_path, model)
-    pdb.set_trace()
-    print('Predicted {}'.format(count))
-    count += 1
-    features.append(predictions)
 
-'''
-montage_shape = (128, 128)
-montages = build_montages(predictions, montage_shape, (7, 7))
+    montage_shape = (128, 128)
+    montages = build_montages(predictions, montage_shape, (7, 6))
 
-for montage in montages:
-    cv2.imshow(IMAGE, montage)
-    if cv2.waitKey() == 113:
+    break_out = False
+    for montage in montages:
+        cv2.imshow('Filters', montage)
+        if cv2.waitKey() == 113:
+            break_out = True
+            break
+
+    if break_out:
         break
-'''
 
