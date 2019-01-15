@@ -1,5 +1,8 @@
 IMAGE_FILE_SUFFIXES = ['jpg', 'jpeg', 'png']
+CHANNELS = [0, 1, 2]
+CLUSTERS_DATA = 'clusters'
 DATA = 'data'
+TESTING = 'testing'
 EPOCHS = 64
 MODELS_FOLDER = 'models'
 BATCH_SIZE = 32

@@ -1,10 +1,28 @@
 from losses import bce_dice_loss, dice_loss, weighted_bce_dice_loss, weighted_dice_loss, dice_coeff
 
+
 from keras.models import Model
-from keras.layers import Input, concatenate, Conv2D, MaxPooling2D, Activation, UpSampling2D, BatchNormalization, Dense, Flatten, Dropout
-from keras.losses import mean_squared_error
+from keras.layers import Input, concatenate, Conv2D, MaxPooling2D, Activation, UpSampling2D, BatchNormalization, Dense, Flatten, Dropout, GlobalAveragePooling2D
+from keras.losses import mean_squared_error, categorical_crossentropy
 from keras.metrics import binary_accuracy
 from keras.optimizers import RMSprop
+
+
+def model_inception_v3(input_shape, classes):
+    base_model = InceptionV3(weights='imagenet', include_top=False)
+
+    x = base_model.output
+    x = GlobalAveragePooling2D()(x)
+    x = Dense(1024, activation='relu')(x)
+    predictions = Dense(classes, activation='softmax')(x)
+
+    model = Model(inputs=base_model.input, outputs=predictions)
+
+    for layer in base_model.layers:
+        layer.trainable = False
+
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+    return model, 'inception_v3'
 
 
 def model_1(input_shape=(128, 128, 3), num_classes=2, kernel_size=3, number_of_blocks=3):
@@ -116,7 +134,7 @@ def model_alexnet(input_shape=(256, 256, 3), num_classes=2):
     act = Activation('softmax')(bn)
 
     model = Model(inputs=inputs, outputs=act)  # output should be act
-    model.compile(optimizer=RMSprop(lr=0.0001), loss=mean_squared_error, metrics=[binary_accuracy])
+    model.compile(optimizer='adam', loss=categorical_crossentropy, metrics=['accuracy'])
 
     return model, 'model_alexnet'
 

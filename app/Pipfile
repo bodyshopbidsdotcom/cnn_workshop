@@ -13,6 +13,7 @@ opencv-python = "*"
 sklearn = "*"
 imutils = "*"
 scikit-learn = "*"
+tensorflow-gpu = "*"
 
 [requires]
 python_version = "3.6.4"

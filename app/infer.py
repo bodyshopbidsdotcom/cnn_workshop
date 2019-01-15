@@ -1,13 +1,15 @@
 import pdb
+from os import listdir
 from os.path import join
 
 import cv2
 import numpy as np
 
-from model import model_alexnet
+from model import model_alexnet, model_inception_v3
+from constants import IMAGE_FILE_SUFFIXES
 
-MODEL = 'weights-0032-0.92.hdf5'
-IMAGE = 'cat.0.jpg'
+
+MODEL = 'weights-0016-0.36.hdf5'
 
 
 def infer(model, image_array):
@@ -16,16 +18,22 @@ def infer(model, image_array):
     return prediction
 
 
-model, name = model_alexnet(input_shape=(128, 128, 3))
+
+model, name = model_inception_v3(input_shape=(256, 256, 3))
 model.load_weights(MODEL)
 
-image_path = join('data', IMAGE)
-image = cv2.imread(image_path)
+folder = '/Users/jaskiemr/Downloads'
+files = listdir(folder)
+files = [file for file in files if file.lower().endswith(tuple(IMAGE_FILE_SUFFIXES))]
 
-image_array = np.empty([1, 128, 128, 3])
-image_array[0] = image
+for file in files:
+  image_path = join(folder, file)
+  image = cv2.imread(image_path)
 
-pdb.set_trace()
-prediction = infer(model, image_array)
+  image_array = np.empty([1, 256, 256, 3])
+  image_array[0] = image
 
-print(prediction)
+  pdb.set_trace()
+  prediction = infer(model, image_array)
+
+  print(prediction)

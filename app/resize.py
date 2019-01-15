@@ -1,4 +1,9 @@
-from constants import DATA
+from os import listdir
+from os.path import path
+
+import cv2
+
+from constants import DATA, SHAPE
 
 
 def resize():

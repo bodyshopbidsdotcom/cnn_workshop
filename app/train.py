@@ -8,7 +8,7 @@ import pdb
 import cv2
 from uuid import uuid4
 
-from model import model_1, model_2, model_alexnet
+from model import model_1, model_2, model_alexnet, model_inception_v3
 from perturbations import perturb
 from constants import DATA, BATCH_SIZE, TEST_SIZE, RANDOM_SEED, MODELS_FOLDER, EPOCHS, IMAGE_FILE_SUFFIXES
 
@@ -70,7 +70,7 @@ def train(model, model_name):
                                                    epsilon=1e-4),
                  keras_callbacks.ModelCheckpoint(monitor='val_loss',
                                                  filepath=join(models_folder,
-                                                               'weights-{epoch:04d}-{val_binary_accuracy:.2f}.hdf5'),
+                                                               'weights-{epoch:04d}-{val_acc:.2f}.hdf5'),
                                                  save_best_only=True,
                                                  save_weights_only=False)]
 
@@ -84,7 +84,8 @@ def train(model, model_name):
         validation_steps=np.ceil(float(len(valid_files)) / float(BATCH_SIZE)))
 
 
-
+model, name = model_inception_v3(input_shape=(1024, 1024, 3), classes=2)
+train(model, name)
 
 
 '''
