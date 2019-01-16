@@ -21,7 +21,7 @@ def create_model_folder(folder_name):
 
 def classification_vector(filename):
     rv = np.zeros(2)
-    if 'cat' in filename:
+    if 'yes' in filename:
         rv[0] = 1
     else:
         rv[1] = 1

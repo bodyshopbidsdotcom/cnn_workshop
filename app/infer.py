@@ -12,7 +12,7 @@ from constants import IMAGE_FILE_SUFFIXES, TESTING
 MODEL = 'weights-0016-0.36.hdf5'
 
 
-def _infer(model, image_array):
+def infer(model, image_array):
     norm_image_array = np.array(image_array, np.float32) / 255
     prediction = model.predict(norm_image_array)
     return prediction
@@ -40,7 +40,7 @@ def confusion_matrix(results):
                 matrix[1, 1] += 1 # actual no, predicted no
 
 
-model, name = model_inception_v3(input_shape=(256, 256, 3))
+model, name = model_inception_v3(input_shape=(256, 256, 3), classes=2)
 model.load_weights(MODEL)
 
 folder = TESTING
@@ -57,5 +57,7 @@ for file in files:
   image_array[0] = image
 
   prediction = infer(model, image_array)
-  results['file'] = prediction
+  results[file] = prediction
   print(prediction)
+
+confusion_matrix(results)

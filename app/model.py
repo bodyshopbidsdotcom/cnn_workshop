@@ -1,6 +1,6 @@
 from losses import bce_dice_loss, dice_loss, weighted_bce_dice_loss, weighted_dice_loss, dice_coeff
 
-
+from keras.applications.inception_v3 import InceptionV3
 from keras.models import Model
 from keras.layers import Input, concatenate, Conv2D, MaxPooling2D, Activation, UpSampling2D, BatchNormalization, Dense, Flatten, Dropout, GlobalAveragePooling2D
 from keras.losses import mean_squared_error, categorical_crossentropy
@@ -21,7 +21,7 @@ def model_inception_v3(input_shape, classes):
     for layer in base_model.layers:
         layer.trainable = False
 
-    model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
     return model, 'inception_v3'
 
 
