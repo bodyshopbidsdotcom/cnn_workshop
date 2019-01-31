@@ -1,3 +1,5 @@
+import pdb
+
 from losses import bce_dice_loss, dice_loss, weighted_bce_dice_loss, weighted_dice_loss, dice_coeff
 
 from keras.applications.inception_v3 import InceptionV3
@@ -6,6 +8,29 @@ from keras.layers import Input, concatenate, Conv2D, MaxPooling2D, Activation, U
 from keras.losses import mean_squared_error, categorical_crossentropy
 from keras.metrics import binary_accuracy
 from keras.optimizers import RMSprop
+
+
+def model_inception_v3_double_input(input_shape, classes):
+    input_1 = Input(shape=input_shape)
+    input_2 = Input(shape=input_shape)
+
+    concat_layer = concatenate([input_1, input_2], axis=3)
+
+    base_model = InceptionV3(weights='imagenet', include_top=False)
+
+    x = base_model.output
+    x = GlobalAveragePooling2D()(x)
+    x = Dense(1024, activation='relu')(x)
+    predictions = Dense(classes, activation='softmax')(x)
+
+    model = Model(inputs=base_model.input, outputs=predictions)
+
+    for layer in base_model.layers:
+        layer.trainable = False
+
+    model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+
+    return model, 'inception_v3_double_input'
 
 
 def model_inception_v3(input_shape, classes):
@@ -17,7 +42,7 @@ def model_inception_v3(input_shape, classes):
     predictions = Dense(classes, activation='softmax')(x)
 
     model = Model(inputs=base_model.input, outputs=predictions)
-
+    pdb.set_trace()
     for layer in base_model.layers:
         layer.trainable = False
 
